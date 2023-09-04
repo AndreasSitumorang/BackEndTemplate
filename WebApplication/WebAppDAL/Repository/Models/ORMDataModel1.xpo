@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dataBaseObjectModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="41537c11-a41c-49f0-8098-14cd235b62c1" namespace="WebAppDAL.Repository.Models.WebApplication" dataBaseShemaInfo="H4sIAAAAAAAEAMVW32+bSBB+P+n+B8TTVcoaFpZfFXaVmKSy2quiOjn1LVrYwVkVL75dcJz762/BmBjbufTaKn2C+WZmZ77ZYZj43WZZGGuQipdibOKRbb6b/P5bfEEVzKtS0gXMRF4a2kqotxvFx+Z9Va3eWtbDw8PowR2VcmE5to2tL39+nGf3sKSIC1VRkYHZe7GXvUwd1TDiG5oWoJqQrbxD9oAdZHyiSxib1zr1Uiiz12r9teRLKh8/wOPO6MPdXWd4d+c6mFxOneDKvfT8KJyaxkzdCv53rQ0rWcP+UfqwaVnUS6EGoIZVJblYTGZJbHWvAy/r2C22nvLah08FiJOLLWxsHzePK53dTFSuY3acZkmTuD6ry1oLn+qiaEozNnNaKA0lF43j1p6LyjSsb4gyb+nswnykqmreTGPO/9Gy43kvhlpTmd1T+Ye2ffM9Ma+4PBH0xyIMane+eKk4Jy9wJhhs4OimWvjHO+3ZXnux206n26BdcgNixyziq1ICXwjdTGqvCrHVfmhP8qVo5Sb12OqEXplw1QC3K0YrmLRdoeMPwN72fc3ZjE3CkFHGXAexlEWIYJ+iECKGsEsyhzp+6PpubHXGvXPHdDASnoW1ormYrbKt3544MPsvcv+X4D5Jl9jEw2GGssD2EQnzHEWQ5ojhKPccFwNOj0nu3ej38Nx9tK/PNstpnjpuiFI7BUQIIyiNQoqYFxAcRB7J3J/Oth8Xr083z1iah7mPQuYyRNw0QiENMAoCLyKUhg6OnJ9NVw+v1ycaZcwLmYN1A/sZIkACRFMcoQh7aZDigNi5/81ET6HdsOmRTn4yiZt1BNi1LLMW7AZV/Nd2d5kksL7crCQoNUpoRUdrxxnhM6NTjxtp5I/sM2NaF1UtYSygriQtzozrOi14poffTfkVxDjVYwkHHmGBbQOJaGztQrTxpgVVClRzAZ/rvrrxOdOpQc43/QBtoHmdD6DPsCzXcGi4RQ9tp3oFm9wK/Z8TC2C6Zo28Lc2pHPTWU65AVvwX5/ZMGvF7ECB1e03L5RJEpboePYIHxgko/V8CecV1Kxx4DHWtWwIFVHCuVJlxWukr2/mcULQOuzXmAu7pmpdSd1FOdX/oD+xQo5di62ArnvwLgaL6oD4LAAA=" generateConnectionHelper="true" generateStoredProcedures="true" fieldNameCase="Unchanged" generateDefaultConstructors="false" generateClassesForViews="true" useNameOf="true" connectionStringName="LAPTOP-31JQL744WebApplication" createdInVersion="22.1.6.0" generateJsonSerializationContractResolver="false" generateServiceCollectionExtensions="true" lastModifiedInVersion="22.1.6.0" name="WebApplication" xmlns="http://schemas.microsoft.com/dsltools/ORMDataModel">
+  <comments>
+    <dataBaseObjectModelHasComments Id="2ce5726c-c3a1-471b-b760-8320daa67dd3">
+      <comment Id="d3f382fd-5ce8-4eba-8802-88f2523e9560" text="The 'PK__Persons__3214EC27F3E5698C' index is ignored, because 'ID' is a key" name="PersonsComment">
+        <subjects>
+          <commentReferencesSubjects Id="bce5968b-0a16-4b64-bfed-523b007d0f8d">
+            <xpObjectMoniker Id="88dadd32-dbd9-416a-8e9d-134c2a268363" />
+          </commentReferencesSubjects>
+        </subjects>
+      </comment>
+    </dataBaseObjectModelHasComments>
+  </comments>
+  <classes>
+    <dataBaseObjectModelHasClasses Id="f32f611b-fccc-41a0-914e-ff1203bc6664">
+      <xpObject Id="88dadd32-dbd9-416a-8e9d-134c2a268363" name="Persons" baseClass="XPLiteObject" userFileName="Persons" designerFileName="Persons.Designer" className="Persons" initialName="Persons" virtualBaseClass="XPLiteObject" persistent="Persons" virtualName="Persons">
+        <fields>
+          <generalXpObjectHasFields Id="1ff3151f-95c9-488e-8634-22ef84ecf765">
+            <field Id="3404518c-c706-48ff-9ebf-d19f5231e1b3" name="ID" columnType="Int32" initialName="ID" key="true" persistent="ID" virtualColumnType="Int32" delayedUpdateModifiedOnly="false" />
+          </generalXpObjectHasFields>
+          <generalXpObjectHasFields Id="86d18482-a75e-4ae8-9f64-a98f18fe7610">
+            <field Id="cfafb238-b0be-44d4-b98a-d57417954c33" name="LastName" initialName="LastName" persistent="LastName" virtualColumnType="String" delayedUpdateModifiedOnly="false" size="255" />
+          </generalXpObjectHasFields>
+          <generalXpObjectHasFields Id="e35672bf-5043-49d8-b081-325ea1a6648c">
+            <field Id="fcdbf8f6-8d3d-43b9-8a71-77594aa82192" name="FirstName" initialName="FirstName" persistent="FirstName" virtualColumnType="String" delayedUpdateModifiedOnly="false" size="255" />
+          </generalXpObjectHasFields>
+          <generalXpObjectHasFields Id="2cf235a1-eee6-45f2-b087-6115f16a6497">
+            <field Id="9cd58d21-486c-4e47-ab19-915b7b1740f6" name="Age" columnType="Int32" initialName="Age" persistent="Age" virtualColumnType="Int32" delayedUpdateModifiedOnly="false" />
+          </generalXpObjectHasFields>
+        </fields>
+      </xpObject>
+    </dataBaseObjectModelHasClasses>
+  </classes>
+</dataBaseObjectModel>

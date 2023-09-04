@@ -1,0 +1,10 @@
+TO DO
+set as start up project (DAL)
+chose DAL project in terminal PM (Package Manager )
+
+command pm in WebAppDal
+
+== PM> Scaffold-DbContext "Server=LAPTOP-31JQL744;Database=WebApplication;Trusted_Connection=True;TrustServerCertificate=true;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+
+
