@@ -1,7 +1,9 @@
-﻿using System;
+﻿using DevExpress.Entity.Model.Metadata;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using WebAppDAL.Models;
+using AutoMapper;
 
 namespace WebAppBLL
 {
@@ -9,20 +11,36 @@ namespace WebAppBLL
     {
         private WebAppDAL.PersonDAL personDAL;
         private WebAppService.PersonServices PersonServices;
+        private AutoMapper.Mapper PersonMapper;
 
         public PersonBLL()
         {
             personDAL = new WebAppDAL.PersonDAL();
             PersonServices = new WebAppService.PersonServices();
+
+            var _configPerson = new MapperConfiguration(cfg => cfg.CreateMap<Person, Person>().ReverseMap());
+
+            PersonMapper = new AutoMapper.Mapper(_configPerson);
         }
         public List<Person> getAllPerson()
         {
             return PersonServices.GetAllPerson(); //personDAL.GetAllPerson();
         }
 
-        public Person getOnePerson()
+        public Person getOnePerson(int id)
         {
-            return PersonServices.GetAllPerson(); //personDAL.GetAllPerson();
+            return PersonServices.GetPersonById(id); //personDAL.GetAllPerson();
+        }
+
+        public Person getOnePersonByName(string name)
+        {
+            return PersonServices.GetPersonByName(name); //personDAL.GetAllPerson();
+        }
+
+        public void postPerson(Person personModel)
+        {
+            Person personEntity = PersonMapper.Map<Person, Person>(personModel);
+            PersonServices.postPerson(personEntity);
         }
     }
 }

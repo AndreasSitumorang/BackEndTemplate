@@ -33,11 +33,27 @@ namespace WebApplication.Controllers
         }
 
 
-        [Route("getonePerson")]
+        [Route("getonePerson/{id}")]
         [HttpGet]
-        public Person getonePerson()
+        public Person getonePerson(int id)
         {
-            return personBLL.getOnePerson();
+            return personBLL.getOnePerson(id);
         }
+
+        [Route("getonePersonName/{name}")]
+        [HttpGet]
+        public Person getonePerson(string name)
+        {
+            return personBLL.getOnePersonByName(name);
+        }
+
+
+        [Route("postPerson")]
+        [HttpPost]
+        public void postPerson([FromBody] Person personModel)
+        {
+            personBLL.postPerson(personModel);
+        }
+
     }
 }
