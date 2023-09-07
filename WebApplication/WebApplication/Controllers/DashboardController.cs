@@ -24,14 +24,12 @@ namespace WebApplication.Controllers
             return "joma tech";
         }
 
-
         [Route("getAllPersons")]
         [HttpGet]
         public List<Person> getAllPerson()
         {
             return personBLL.getAllPerson();
         }
-
 
         [Route("getonePerson/{id}")]
         [HttpGet]
@@ -47,12 +45,27 @@ namespace WebApplication.Controllers
             return personBLL.getOnePersonByName(name);
         }
 
-
         [Route("postPerson")]
         [HttpPost]
         public void postPerson([FromBody] Person personModel)
         {
             personBLL.postPerson(personModel);
+        }
+
+        [Route("deletePerson/{id}")]
+        [HttpDelete]
+        public void deletePerson(int id)
+        {
+            personBLL.deletePerson(id);
+            //var db = new PersonDbContext();
+            //Person p = new Person();
+            //p = db.Person.FirstOrDefault(x => x.Id == id);
+
+            //if (p == null)
+            //    throw new Exception("Not found");
+
+            //db.Person.Remove(p);
+            //db.SaveChanges();
         }
 
     }

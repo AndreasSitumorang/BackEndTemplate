@@ -33,18 +33,25 @@ namespace WebAppService
             return db.Persons.Where(person => person.FirstName == name).ToList()  ;
         }
 
-        //public void PostPerson(Person personanlilty)
-        //{
-        //    var db = new WebApplicationContext();
-        //    db.Add(personanlilty);
-        //    db.SaveChanges();
-        //    //return db.Persons.Where(person => person.FirstName == name).ToList();
-        //}
         public void postPerson(Person personanlilty)
         {
             var db = new WebApplicationContext();
             db.Add(personanlilty);
             db.SaveChanges();
         }
+
+        public void deletePerson(int id)
+        {
+            var db = new WebApplicationContext();
+            Person p = new Person();
+            p = db.Persons.FirstOrDefault(x => x.Id == id);
+
+            if (p == null)
+                throw new Exception("Not found");
+
+            db.Persons.Remove(p);
+            db.SaveChanges();
+        }
+
     }
 }

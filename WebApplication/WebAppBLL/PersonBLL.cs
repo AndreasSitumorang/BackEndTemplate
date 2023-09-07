@@ -42,5 +42,10 @@ namespace WebAppBLL
             Person personEntity = PersonMapper.Map<Person, Person>(personModel);
             PersonServices.postPerson(personEntity);
         }
+
+        public void deletePerson(int id)
+        {
+            PersonServices.deletePerson(id);
+        }
     }
 }
