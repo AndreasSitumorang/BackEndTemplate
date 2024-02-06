@@ -1,6 +1,34 @@
 package main
 
-import "fmt"
+import (
+	"database/sql"
+	"fmt"
+	"log"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+
+	_ "github.com/lib/pq"
+)
+
+//setting connection to DB posgre sql
+const (
+	host     = "localhost"
+	port     = 5432
+	user     = "postgres"
+	password = "Angienugraha17#"
+	dbname   = "HalloWorld"
+)
+
+type album struct {
+	ID     string  `json:"id"`
+	Title  string  `json:"title"`
+	Artist string  `json:"artist"`
+	Price  float64 `json:"price"`
+}
+
+var db *sql.DB
+
 func main() {
 fmt.Println("heloo fellwsas")
 
@@ -44,4 +72,70 @@ fmt.Printf("your scored %0.2f \n", 255.555)
 //https://pkg.go.dev/fmt
 var testStr = fmt.Sprintf("nama saya %v dan usia saya adalah %v \n",nameJoma,ages)
 fmt.Println(testStr)
+
+//setting connection string
+
+
+
+var err error
+connectionStr := "user=postgres password=Angienugraha17# dbname=HalloWorld port=5432 sslmode=disable"
+db, err = sql.Open("postgres", connectionStr)
+
+//sql.Open("postgres", "postgres://postgres:postgres@localhost/mydb?sslmode=disable")
+if err != nil {
+	log.Fatal(err)
+}
+
+
+//test rest API GO 
+router := gin.Default()
+router.GET("/albums", getAlbums)
+// router.POST("/albums", createAlbum)
+router.Run("localhost:8080")
+
+
+//test connection to DB
+psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+"password=%s dbname=%s sslmode=disable",
+host, port, user, password, dbname)
+db, err := sql.Open("postgres", psqlInfo)
+if err != nil {
+panic(err)
+}
+defer db.Close()
+
+err = db.Ping()
+if err != nil {
+panic(err)
+}
+
+fmt.Println("Successfully connected!")
+
+}
+
+//returns a list of albums from the database
+func getAlbums(c *gin.Context) {
+	c.Header("Content-Type", "application/json")
+
+	rows, err := db.Query("SELECT id, title, artist, price FROM albums")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	var albums []album
+	for rows.Next() {
+		var a album
+		err := rows.Scan(&a.ID, &a.Title, &a.Artist, &a.Price)
+		if err != nil {
+			log.Fatal(err)
+		}
+		albums = append(albums, a)
+	}
+	err = rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	c.IndentedJSON(http.StatusOK, albums)
 }
