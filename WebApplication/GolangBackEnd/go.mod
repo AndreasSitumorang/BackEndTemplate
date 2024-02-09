@@ -1,4 +1,4 @@
-module example/gopostgressql
+module GolangBackEnd
 
 go 1.18
 
