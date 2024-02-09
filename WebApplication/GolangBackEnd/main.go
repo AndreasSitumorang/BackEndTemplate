@@ -1,6 +1,7 @@
 package main
 
 import (
+	"GolangBackEnd/functions"
 	"database/sql"
 	"fmt"
 	"log"
@@ -31,6 +32,7 @@ var db *sql.DB
 
 func main() {
 fmt.Println("heloo fellwsas")
+fmt.Println(functions.GetValue())
 
 //normal Way
 var nameOne string = "Joma"
