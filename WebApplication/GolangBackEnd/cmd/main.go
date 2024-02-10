@@ -1,6 +1,7 @@
 package main
 
 import (
+	"GolangBackEnd/internal/repositories"
 	"database/sql"
 	"fmt"
 	"log"
@@ -11,7 +12,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-//setting connection to DB posgre sql
+//setting connection to DB posgre sql  "GolangBackEnd/internal/repositories"
 const (
 	host     = "localhost"
 	port     = 5432
@@ -30,7 +31,17 @@ type album struct {
 var db *sql.DB
 
 func main() {
-fmt.Println("heloo fellwsas")
+
+dataRepository:= repositories.NewPostgreSQLMovieRepository()
+
+
+
+
+
+
+
+
+fmt.Println("heloo fellwsas", dataRepository)
 
 //normal Way
 var nameOne string = "Joma"
@@ -74,8 +85,6 @@ var testStr = fmt.Sprintf("nama saya %v dan usia saya adalah %v \n",nameJoma,age
 fmt.Println(testStr)
 
 //setting connection string
-
-
 
 var err error
 connectionStr := "user=postgres password=Angienugraha17# dbname=HalloWorld port=5432 sslmode=disable"
