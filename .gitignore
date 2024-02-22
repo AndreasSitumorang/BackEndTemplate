@@ -2,7 +2,7 @@
 
 # dependencies
 # /node_modules
-BackEndTemplate/WebApplication/FrontEnd/Home/node_modules
+WebApplication/FrontEnd/Home/node_modules
 /.pnp
 .pnp.js
 
