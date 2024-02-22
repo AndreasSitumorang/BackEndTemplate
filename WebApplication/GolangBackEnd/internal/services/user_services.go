@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"GolangBackEnd/internal/repositories"
+	"GolangBackEnd/models"
 )
 
 var (
@@ -22,6 +23,6 @@ func NewDefaultMovieService(mRepo repositories.IMovieRepository) *DefaultMovieSe
 	}
 }
 
-// func (d *DefaultMovieService) GetMovies() ([]models.Movie, error) {
-// 	return d.movieRepo.GetMovies()
-// }
+func (d *DefaultMovieService) GetMovies() ([]models.Movie, error) {
+	return d.movieRepo.GetMovies()
+}
