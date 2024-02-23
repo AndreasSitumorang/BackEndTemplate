@@ -5,10 +5,10 @@ import (
 )
 
 type IUsersRepository interface {
-	GetUsers() ([]models.Users, error)
-	GetUser(id int) (models.Users, error)
-	CreateUser(user models.Users) error
+	GetUsers() ([]models.Account, error)
+	GetUser(id int) (models.Account, error)
+	CreateUser(user models.Account) error
 	DeleteUser(id int) error
 	DeleteAllUsers() error
-	UpdateUser(id int, user models.Users) error
+	UpdateUser(id int, user models.Account) error
 }

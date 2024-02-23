@@ -48,11 +48,11 @@ var (
 )
 
 type inmemoryUserRepository struct {
-	Users []models.Users
+	Users []models.Account
 }
 
 func NewInMemoryUserRepository() *inmemoryUserRepository {
-	var user = []models.Users{
+	var user = []models.Account{
 		{   user_id:   1,
 			username:  "john_doe",
 			password:  "password123",
@@ -76,6 +76,6 @@ func NewInMemoryUserRepository() *inmemoryUserRepository {
 	}
 }
 
-func (i *inmemoryUserRepository) GetUsers() ([]models.Users, error) {
+func (i *inmemoryUserRepository) GetUsers() ([]models.Account, error) {
 	return i.Users, nil
 }
