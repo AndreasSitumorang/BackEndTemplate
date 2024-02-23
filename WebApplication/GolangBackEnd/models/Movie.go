@@ -6,4 +6,4 @@ type Movie struct {
 	ReleaseYear int     `json:"release_year"`
 	Score       float64 `json:"score"`
 }
-
+//Adding model use capilta latter

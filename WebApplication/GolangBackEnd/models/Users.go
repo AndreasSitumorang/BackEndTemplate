@@ -10,5 +10,4 @@ type Account struct {
     Updated_at string `json:"updated_at"`
     Email     string `json:"email"`
 }
-
 //Adding model use capilta latter
