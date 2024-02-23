@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS public.users (
     salt character varying(255) COLLATE pg_catalog."default" NOT NULL,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    email character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT users_pkey PRIMARY KEY (user_id),
     CONSTRAINT users_username_key UNIQUE (username)
 ) TABLESPACE pg_default;

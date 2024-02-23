@@ -9,7 +9,7 @@ import (
 	"log"
 )
 
-type UserRepository struct{}
+type MovieRepository struct{}
 
 type postgresqlMovieRepository struct {
 	connectionPool *sql.DB
@@ -17,7 +17,8 @@ type postgresqlMovieRepository struct {
 
 func NewPostgreSQLMovieRepository() *postgresqlMovieRepository {
 	// Template: "postgresql://<username>:<password>@<database_ip>/<database-name>?sslmode=disable
-	connStr := "user=postgres password=Angienugraha17# dbname=HalloWorld port=5432 sslmode=disable"
+	// connStr := "user=postgres password=Angienugraha17# dbname=HalloWorld port=5432 sslmode=disable"
+	connStr := "postgres://postgres:Angienugraha17#@localhost/HalloWorld?sslmode=disable"
 	connectionPool, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
@@ -35,8 +36,8 @@ func NewPostgreSQLMovieRepository() *postgresqlMovieRepository {
 	}
 }
 
-func NewUserRepository() *UserRepository {
-    return &UserRepository{}
+func NewMovieRepository() *MovieRepository {
+    return &MovieRepository{}
 }
 
 
