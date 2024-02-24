@@ -5,8 +5,6 @@ import (
 	"GolangBackEnd/models"
 	"database/sql"
 	"errors"
-	"fmt"
-	"log"
 )
 
 type MovieRepository struct{}
@@ -15,26 +13,26 @@ type postgresqlMovieRepository struct {
 	connectionPool *sql.DB
 }
 
-func NewPostgreSQLMovieRepository() *postgresqlMovieRepository {
-	// Template: "postgresql://<username>:<password>@<database_ip>/<database-name>?sslmode=disable
-	// connStr := "user=postgres password=Angienugraha17# dbname=HalloWorld port=5432 sslmode=disable"
-	connStr := "postgres://postgres:Angienugraha17#@localhost/HalloWorld?sslmode=disable"
-	connectionPool, err := sql.Open("postgres", connStr)
-	if err != nil {
-		log.Fatal(err)
-	}
+// func NewPostgreSQLMovieRepository() *postgresqlMovieRepository {
+// 	// Template: "postgresql://<username>:<password>@<database_ip>/<database-name>?sslmode=disable
+// 	// connStr := "user=postgres password=Angienugraha17# dbname=HalloWorld port=5432 sslmode=disable"
+// 	connStr := "postgres://postgres:Angienugraha17#@localhost/HalloWorld?sslmode=disable"
+// 	connectionPool, err := sql.Open("postgres", connStr)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	err = connectionPool.Ping()
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	err = connectionPool.Ping()
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	fmt.Println("PostgreSQL connection is successful")
+// 	fmt.Println("PostgreSQL connection is successful")
 
-	return &postgresqlMovieRepository{
-		connectionPool: connectionPool,
-	}
-}
+// 	return &postgresqlMovieRepository{
+// 		connectionPool: connectionPool,
+// 	}
+// }
 
 func NewMovieRepository() *MovieRepository {
     return &MovieRepository{}
