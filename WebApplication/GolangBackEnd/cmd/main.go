@@ -1,13 +1,9 @@
 package main
 
 import (
-	"GolangBackEnd/internal/repositories"
 	"database/sql"
 	"fmt"
 	"log"
-	"net/http"
-
-	"github.com/gin-gonic/gin"
 
 	_ "github.com/lib/pq"
 )
@@ -20,19 +16,44 @@ const (
 	password = "Angienugraha17#"
 	dbname   = "HalloWorld"
 )
+// DBConnection represents the interface for a database connection.
+type DBConnection interface {
+    Connect() error
+    Close() error
+}
 
-type album struct {
-	ID     string  `json:"id"`
-	Title  string  `json:"title"`
-	Artist string  `json:"artist"`
-	Price  float64 `json:"price"`
+// PostgreSQLConnection represents a PostgreSQL database connection.
+type PostgreSQLConnection struct {
+    ConnectionString string
+}
+
+// Connect establishes a connection to the PostgreSQL database.
+func (p *PostgreSQLConnection) Connect() error {
+    fmt.Printf("Connecting to PostgreSQL database: %s\n", p.ConnectionString)
+    // Implement connection logic here
+    return nil
+}
+
+// Close closes the connection to the PostgreSQL database.
+func (p *PostgreSQLConnection) Close() error {
+    fmt.Println("Closing PostgreSQL database connection")
+    // Implement close connection logic here
+    return nil
 }
 
 var db *sql.DB
 
 func main() {
 
-dataRepository:= repositories.NewPostgreSQLMovieRepository()
+	   // PostgreSQL example
+	   dataRepository := &PostgreSQLConnection{ConnectionString: "postgres://user:password@localhost:5432/mydatabase"}
+	   if err := dataRepository.Connect(); err != nil {
+		   fmt.Println("Error connecting to PostgreSQL:", err)
+		   return
+	   }
+	   defer dataRepository.Close()
+
+// dataRepository:= repositories.NewPostgreSQLMovieRepository()
 
 
 
@@ -96,11 +117,11 @@ if err != nil {
 }
 
 
-//test rest API GO 
-router := gin.Default()
-router.GET("/albums", getAlbums)
-// router.POST("/albums", createAlbum)
-router.Run("localhost:8080")
+// //test rest API GO 
+// router := gin.Default()
+// router.GET("/albums", getAlbums)
+// // router.POST("/albums", createAlbum)
+// router.Run("localhost:8080")
 
 
 //test connection to DB
@@ -122,29 +143,29 @@ fmt.Println("Successfully connected!")
 
 }
 
-//returns a list of albums from the database
-func getAlbums(c *gin.Context) {
-	c.Header("Content-Type", "application/json")
+// //returns a list of albums from the database
+// func getAlbums(c *gin.Context) {
+// 	c.Header("Content-Type", "application/json")
 
-	rows, err := db.Query("SELECT id, title, artist, price FROM albums")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
+// 	rows, err := db.Query("SELECT id, title, artist, price FROM albums")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	defer rows.Close()
 
-	var albums []album
-	for rows.Next() {
-		var a album
-		err := rows.Scan(&a.ID, &a.Title, &a.Artist, &a.Price)
-		if err != nil {
-			log.Fatal(err)
-		}
-		albums = append(albums, a)
-	}
-	err = rows.Err()
-	if err != nil {
-		log.Fatal(err)
-	}
+// 	var albums []album
+// 	for rows.Next() {
+// 		var a album
+// 		err := rows.Scan(&a.ID, &a.Title, &a.Artist, &a.Price)
+// 		if err != nil {
+// 			log.Fatal(err)
+// 		}
+// 		albums = append(albums, a)
+// 	}
+// 	err = rows.Err()
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
 
-	c.IndentedJSON(http.StatusOK, albums)
-}
+// 	c.IndentedJSON(http.StatusOK, albums)
+// }

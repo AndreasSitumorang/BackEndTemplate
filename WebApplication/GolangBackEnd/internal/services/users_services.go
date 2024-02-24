@@ -23,6 +23,6 @@ func NewDefaultUserService(userRepo repositories.IUsersRepository) *DefaultUserS
 	}
 }
 
-func (d *DefaultUserService) GetUser() ([]models.Users, error) {
+func (d *DefaultUserService) GetUser() ([]models.Account, error) {
 	return d.usersRepository.GetUsers()
 }
