@@ -46,7 +46,7 @@ var db *sql.DB
 func main() {
 
 	   // PostgreSQL example
-	   dataRepository := &PostgreSQLConnection{ConnectionString: "postgres://user:password@localhost:5432/mydatabase"}
+	   dataRepository := &PostgreSQLConnection{ConnectionString: "postgres://user:Angienugraha17#@localhost:5432/HalloWorld"}
 	   if err := dataRepository.Connect(); err != nil {
 		   fmt.Println("Error connecting to PostgreSQL:", err)
 		   return
