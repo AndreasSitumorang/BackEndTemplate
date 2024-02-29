@@ -1,11 +1,13 @@
 package main
 
 import (
+	handels "GolangBackEnd/internal/handler"
 	"GolangBackEnd/internal/repositories"
 	service "GolangBackEnd/internal/services"
 	"database/sql"
 	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
@@ -63,6 +65,14 @@ router.GET("/movies", movieHandler.GetMovies)
 
 
 
+    // Start the HTTP server on port 8080
+    fmt.Println("Server is listening on port 8080...")
+    err := http.ListenAndServe(":8080", nil)
+    if err != nil {
+        fmt.Println("Error starting server:", err)
+    }
+
+
 
 //normal Way
 var nameOne string = "Joma"
@@ -108,7 +118,6 @@ fmt.Println(testStr)
 
 //setting connection string
 
-var err error
 connectionStr := "user=postgres password=Angienugraha17# dbname=HalloWorld port=5432 sslmode=disable"
 db, err = sql.Open("postgres", connectionStr)
 
@@ -117,12 +126,6 @@ if err != nil {
 	log.Fatal(err)
 }
 
-
-// //test rest API GO 
-// router := gin.Default()
-// router.GET("/albums", getAlbums)
-// // router.POST("/albums", createAlbum)
-// router.Run("localhost:8080")
 
 
 //test connection to DB
