@@ -5,61 +5,82 @@ import (
 	"GolangBackEnd/models"
 	"database/sql"
 	"errors"
+	"fmt"
+	"log"
 )
-
-type MovieRepository struct{}
 
 type postgresqlMovieRepository struct {
 	connectionPool *sql.DB
 }
-
-// func NewPostgreSQLMovieRepository() *postgresqlMovieRepository {
-// 	// Template: "postgresql://<username>:<password>@<database_ip>/<database-name>?sslmode=disable
-// 	// connStr := "user=postgres password=Angienugraha17# dbname=HalloWorld port=5432 sslmode=disable"
-// 	connStr := "postgres://postgres:Angienugraha17#@localhost/HalloWorld?sslmode=disable"
-// 	connectionPool, err := sql.Open("postgres", connStr)
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	err = connectionPool.Ping()
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	fmt.Println("PostgreSQL connection is successful")
-
-// 	return &postgresqlMovieRepository{
-// 		connectionPool: connectionPool,
-// 	}
-// }
-
-func NewMovieRepository() *MovieRepository {
-    return &MovieRepository{}
-}
-
-
 var (
 	ErrMovieNotFound = errors.New("FromRepository - movie not found")
 )
 
-type inmemoryMovieRepository struct {
-	Movies []models.Movie
-}
+func NewPostgreSQLMovieRepository() *postgresqlMovieRepository {
+	// Template: "postgresql://<username>:<password>@<database_ip>/<database-name>?sslmode=disable
+	// connStr := "postgres://postgres:postgres@localhost/movie-db?sslmode=disable"
+	connStr := "postgres://postgres:Angienugraha17%23@localhost:5432/HalloWorld?sslmode=disable"
 
-func NewInMemoryMovieRepository() *inmemoryMovieRepository {
-	var movies = []models.Movie{
-		{ID: 1, Title: "The Shawshank Redemption", ReleaseYear: 1994, Score: 9.3},
-		{ID: 2, Title: "The Godfather", ReleaseYear: 1972, Score: 9.2},
-		{ID: 3, Title: "The Dark Knight", ReleaseYear: 2008, Score: 9.0},
+	connectionPool, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	return &inmemoryMovieRepository{
-		Movies: movies,
+	err = connectionPool.Ping()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("PostgreSQL connection is successful")
+
+	return &postgresqlMovieRepository{
+		connectionPool: connectionPool,
 	}
 }
 
-func (i *inmemoryMovieRepository) GetMovies() ([]models.Movie, error) {
-	return i.Movies, nil
+func (p *postgresqlMovieRepository) GetMovies() ([]models.Movie, error) {
+	rows, err := p.connectionPool.Query("SELECT * FROM movies")
+	if err != nil {
+		return []models.Movie{}, err
+	}
+	defer rows.Close()
+
+	movies := make([]models.Movie, 0)
+
+	for rows.Next() {
+		mv := models.Movie{}
+		err := rows.Scan(&mv.ID, &mv.Title, &mv.ReleaseYear, &mv.Score)
+		if err != nil {
+			return movies, err
+		}
+		movies = append(movies, mv)
+	}
+
+	return movies, nil
+}
+
+func (p *postgresqlMovieRepository) GetMovie(id int) (models.Movie, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (p *postgresqlMovieRepository) CreateMovie(movie models.Movie) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (p *postgresqlMovieRepository) DeleteMovie(id int) error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (p *postgresqlMovieRepository) DeleteAllMovies() error {
+	//TODO implement me
+	panic("implement me")
+}
+
+func (p *postgresqlMovieRepository) UpdateMovie(id int, movie models.Movie) error {
+	//TODO implement me
+	panic("implement me")
 }
 

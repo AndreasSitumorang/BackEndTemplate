@@ -1,13 +1,17 @@
 package main
 
 import (
+	"GolangBackEnd/internal/repositories"
+	service "GolangBackEnd/internal/services"
 	"database/sql"
 	"fmt"
 	"log"
 
+	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
 )
 
+var db *sql.DB
 //setting connection to DB posgre sql  "GolangBackEnd/internal/repositories"
 const (
 	host     = "localhost"
@@ -41,31 +45,31 @@ func (p *PostgreSQLConnection) Close() error {
     return nil
 }
 
-var db *sql.DB
+	
+
 
 func main() {
 
-	   // PostgreSQL example
-	   dataRepository := &PostgreSQLConnection{ConnectionString: "postgres://user:Angienugraha17#@localhost:5432/HalloWorld"}
-	   if err := dataRepository.Connect(); err != nil {
-		   fmt.Println("Error connecting to PostgreSQL:", err)
-		   return
-	   }
-	   defer dataRepository.Close()
-
-// dataRepository:= repositories.NewPostgreSQLMovieRepository()
 
 
+moviePostgreSQLRepository := repositories.NewPostgreSQLMovieRepository() //repositories.NewPostgreSQLMovieRepository()
+movieService := service.NewDefaultMovieService(moviePostgreSQLRepository)
+movieHandler := handels.NewMovieHandler(movieService)
+
+router := httprouter.New()
+
+router.GET("/movies", movieHandler.GetMovies)
 
 
 
-fmt.Println("heloo fellwsas", dataRepository)
+
 
 //normal Way
 var nameOne string = "Joma"
 var nameTwo = "Tech" 
 var nameThree string
 
+fmt.Print(movieService)
 fmt.Println(nameOne, nameTwo, nameThree)
 
 nameOne = "Marshal"
