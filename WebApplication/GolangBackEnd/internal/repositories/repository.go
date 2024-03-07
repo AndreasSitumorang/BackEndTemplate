@@ -39,7 +39,7 @@ func NewPostgreSQLMovieRepository() *postgresqlMovieRepository {
 }
 
 func (p *postgresqlMovieRepository) GetMovies() ([]models.Movie, error) {
-	rows, err := p.connectionPool.Query("SELECT * FROM movies")
+	rows, err := p.connectionPool.Query("SELECT * FROM albums")
 	if err != nil {
 		return []models.Movie{}, err
 	}
