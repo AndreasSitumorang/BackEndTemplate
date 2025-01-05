@@ -7,50 +7,47 @@ namespace WebAppService
 {
     public class PersonServices
     {
-        private WebAppDAL.PersonDAL personDAL;
-
         public List<Person> GetAllPerson()
         {
-            var db = new WebApplicationContext();
-            return db.Set<Person>().ToList();
+            var data = new List<Person>();
+            return data;
         }
 
         public Person GetPersonById(int id)
         {
-            var db = new WebApplicationContext();
-            return db.Persons.FirstOrDefault( person => person.Id == id);
+            var data = new List<Person>();
+            return data.FirstOrDefault( person => person.Id == id);
         }
 
         public Person GetPersonByName(string name)
         {
-            var db = new WebApplicationContext();
-            return db.Persons.FirstOrDefault(person => person.FirstName == name);
+            var data = new List<Person>();
+            return data.FirstOrDefault(person => person.FirstName == name);
         }
 
         public List<Person> GetAllPersonByName(string name)
         {
-            var db = new WebApplicationContext();
-            return db.Persons.Where(person => person.FirstName == name).ToList()  ;
+            var data = new List<Person>();
+            return data.Where(person => person.FirstName == name).ToList()  ;
         }
 
         public void postPerson(Person personanlilty)
         {
-            var db = new WebApplicationContext();
-            db.Add(personanlilty);
-            db.SaveChanges();
+            var data = new List<Person>();
+            data.Add(personanlilty);
         }
 
         public void deletePerson(int id)
         {
-            var db = new WebApplicationContext();
-            Person p = new Person();
-            p = db.Persons.FirstOrDefault(x => x.Id == id);
+            //var db = new WebApplicationContext();
+            //Person p = new Person();
+            //p = db.Persons.FirstOrDefault(x => x.Id == id);
 
-            if (p == null)
-                throw new Exception("Not found");
+            //if (p == null)
+            //    throw new Exception("Not found");
 
-            db.Persons.Remove(p);
-            db.SaveChanges();
+            //db.Persons.Remove(p);
+            //db.SaveChanges();
         }
 
     }

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 #nullable disable
 
 namespace WebAppDAL.Models
 {
-    public partial class Person
+    public class Person
     {
         public int Id { get; set; }
         public string LastName { get; set; }

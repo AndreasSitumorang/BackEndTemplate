@@ -9,13 +9,11 @@ namespace WebAppBLL
 {
     public class PersonBLL
     {
-        private WebAppDAL.PersonDAL personDAL;
         private WebAppService.PersonServices PersonServices;
         private AutoMapper.Mapper PersonMapper;
 
         public PersonBLL()
         {
-            personDAL = new WebAppDAL.PersonDAL();
             PersonServices = new WebAppService.PersonServices();
 
             var _configPerson = new MapperConfiguration(cfg => cfg.CreateMap<Person, Person>().ReverseMap());

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "../ui/styles/LoginSignUp.css";
 import axios from "axios";
 
+
 interface LoginFormProps {
   // onLogin: (email: string, password: string) => void;
   // onRegisterSuccess : (email: string, password: string, username: string) => void;
@@ -21,13 +22,28 @@ const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("https://localhost:44374/Login", {
-        username,
-        password,
-      });
+      // const loginData = {
+      //   email,
+      //   password 
+      // };
 
-      const { token } = response.data;
-      onLoginSuccess(token);
+      // const response = await axios.post("https://localhost:44374/Login",JSON.stringify({ email, password }),{
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   }
+      // } );
+
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      };
+      fetch("https://localhost:44374/Login", requestOptions)
+        .then((response) => response.json())
+        .then((data) => console.log(data));
+
+      // const { token } = response.data;
+      // onLoginSuccess(token);
       navigate("/dashboard");
     } catch (error) {
       console.error("Login failed:");
@@ -42,7 +58,7 @@ const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
         password,
       });
 
-      const { token } = response.data;
+      // const { token } = response.data;
       navigate("/dashboard");
     } catch (error) {
       console.error("Login failed:");
