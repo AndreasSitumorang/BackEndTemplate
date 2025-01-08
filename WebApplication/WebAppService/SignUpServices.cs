@@ -2,53 +2,82 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using WebAppDAL.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.Data;
+using MySqlConnector;
+using System.Transactions;
 
 namespace WebAppService
 {
 
     public class SignUpServices
     {
-        private WebApplicationContext _context;
+        WebApplicationContext webApplicationContext;
         public bool SignupNewUser(Users users, string salt)
         {
-            string query = "select username from users where username = '" + users.username + "' and email = '" + users.email + "'";
-            _context = new WebApplicationContext();
-
-            var data = _context.Database.ExecuteSqlRaw(query);
-            if (data != null)
+            webApplicationContext = new WebApplicationContext();
+            string connectStr = webApplicationContext.Database.GetDbConnection().ConnectionString;
+            using (SqlConnection committrans = new SqlConnection(connectStr))
             {
-                return false;
-            }
-            else
-            {
-                byte[] bytes = Encoding.UTF8.GetBytes(salt);
+                committrans.Open();
+                var transaction = committrans.BeginTransaction();
 
-                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                    password: users.password!,
-                    salt: bytes,
-                    prf: KeyDerivationPrf.HMACSHA256,
-                    iterationCount: 100000,
-                    numBytesRequested: 256 / 8));
-
-                query = "INSERT INTO [dbo].[users]([username], [password], [key], [salt], [created_at], [updated_at], [email]) VALUES(@username, @password, @salt, @salt, GETDATE(), GETDATE(), @email)";
-                SqlParameter[] pamameters = 
+                try
                 {
-                    new SqlParameter("@username", users.username),
-                    new SqlParameter("@email", users.email),
-                    new SqlParameter("@password", hashed),
-                    new SqlParameter("@salt", users.salt),
-                };
+                    string query = "select * from users where  email = '" + users.email + "'";
+                    CommonSerives common = new CommonSerives();
+                    DataTable dataTable = common.ExecuteSqlToDataTable(connectStr, query);
 
-                _context.Database.ExecuteSqlRaw(query, pamameters);
+                    if (dataTable.Rows.Count == 0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
 
-                return true;
-            }
+                        byte[] bytes = Encoding.UTF8.GetBytes(salt);
+
+                        string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                            password: users.password!,
+                            salt: bytes,
+                            prf: KeyDerivationPrf.HMACSHA256,
+                            iterationCount: 100000,
+                            numBytesRequested: 256 / 8));
+
+                        query = @"INSERT INTO [dbo].[users]( [username], [password], [key], [salt], [created_at], [updated_at], [email]) VALUES( @username, @password, @key, @salt, @created_at, @updated_at, @email)";
+
+                        SqlParameter[] parameters =
+                        {
+                        new SqlParameter("@username", users.username),
+                        new SqlParameter("@password", hashed),
+                        new SqlParameter("@salt", salt),
+                        new SqlParameter("@key", salt),
+                        new SqlParameter("@created_at", DateTime.Now),  // Pass DateTime directly
+                        new SqlParameter("@updated_at", DateTime.Now),  // Pass DateTime directly
+                        new SqlParameter("@email", users.email)
+                        };
+
+                        SqlCommand cmd = new SqlCommand(query, committrans);
+
+                        cmd.Transaction = transaction;
+                        cmd.Parameters.AddRange(parameters);
+                        cmd.ExecuteNonQuery();
+                        transaction.Commit();
+                        committrans.Close();
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine("An error occurred: " + ex.Message);
+                    return false;
+                }
+            }      
         }
     }
 }

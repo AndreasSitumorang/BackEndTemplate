@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-
 #nullable disable
 
 namespace WebAppDAL.Models
 {
+    [PrimaryKey(nameof(Id))]
+
     public class Person
     {
         public int Id { get; set; }
