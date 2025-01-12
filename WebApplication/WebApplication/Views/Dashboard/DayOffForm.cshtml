@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@Model WebApplication.Models.DayOffForm
+@{
+    ViewData["Title"] = "Day Off";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Hi</h1>
+    <div>
+        <form id="submitDayOffForm" action="/ProcessDayoff" method="post">
+            <label for="fname">First name:</label><br>
+            <input type="text" id="fname" name="firstName" value="@Model.firstName"><br>
+
+            <label for="lname">Last name:</label><br>
+            <input type="text" id="lname" name="lastName" value="@Model.lastName"><br>
+
+            <label for="startdate">startdate:</label>
+            <input type="date" id="startDate" name="startDate" value="@Model.startDate"><br>
+
+            <label for="startdate">endDate:</label>
+            <input type="date" id="endDate" name="endDate" value="@Model.endDate"><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>

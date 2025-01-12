@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAppDAL.Models;
@@ -10,6 +12,8 @@ namespace WebApplication.Controllers
 {
     public class DashboardController : Controller
     {
+        private readonly ILogger<DashboardController> _Dashboard;
+
         private WebAppBLL.PersonBLL personBLL;
         public DashboardController()
         {
@@ -66,6 +70,28 @@ namespace WebApplication.Controllers
 
             //db.Person.Remove(p);
             //db.SaveChanges();
+        }
+
+        public IActionResult Dayoff(DayOffForm dayoff)
+        {
+            //return View(model);
+            return View("DayOffForm", dayoff);
+        }
+
+        [Route("ProcessDayoff")]
+        [HttpPost]
+        public IActionResult ProcessDayoff(DayOffForm dayoff)
+        {
+            if (ModelState.IsValid)
+            {
+                if (dayoff.startDate == DateTime.MinValue || dayoff.endDate == DateTime.MinValue)
+                {
+                    return View("DayOffForm", dayoff);
+                }
+                // save to database
+                return View("DayOffForm", dayoff);
+            }
+            return View("DayOffForm", dayoff);
         }
 
     }

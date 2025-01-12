@@ -94,6 +94,15 @@ namespace WebApplication
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "dayoff",
+                    pattern: " {controller = Dashboard}/{action=Dayoff}");
+
+                endpoints.MapControllerRoute(
+                name: "dayoff",
+                pattern: " {controller = Dashboard}/{action=ProcessDayoff}");
+
             });
         }
     }
