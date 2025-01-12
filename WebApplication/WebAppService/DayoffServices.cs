@@ -27,7 +27,8 @@ namespace WebAppService
 
                 try
                 {
-
+                    transaction.Commit();
+                    committrans.Close();
                 }
                 catch (Exception ex)
                 {
