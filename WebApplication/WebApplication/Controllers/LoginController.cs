@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System;
 using WebAppDAL.Models;
+using WebAppBLL;
 using System.ServiceModel.Channels;
 using Microsoft.AspNetCore.Http.HttpResults;
 
@@ -18,7 +19,6 @@ namespace WebApplication.Controllers
         [HttpPost("Login")]
         public IActionResult Login([FromBody] Users login)
         {
-            // Replace this with actual user authentication logic
             if (IsValidUser(login))
             {
                 var token = GenerateJwtToken(login.email);
@@ -30,8 +30,16 @@ namespace WebApplication.Controllers
 
         private bool IsValidUser(Users login)
         {
-            // Simulated user validation (replace with actual database/service validation)
-            return login.email == "admin" && login.password == "password";
+            var common =  new WebAppBLL.LoginBLL();
+            var isValid = common.LoginUser(login.email, login.password);
+            if (isValid)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private string GenerateJwtToken(string username)
@@ -41,20 +49,17 @@ namespace WebApplication.Controllers
             var issuer = _configuration["Jwt:Issuer"];
             var audience = _configuration["Jwt:Audience"];
 
-            // Define claims for the token
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, username),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            // Create signing credentials
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(key),
                 SecurityAlgorithms.HmacSha256
             );
 
-            // Define the token properties
             var token = new JwtSecurityToken(
                 issuer: issuer,
                 audience: audience,
@@ -63,9 +68,7 @@ namespace WebApplication.Controllers
                 signingCredentials: signingCredentials
             );
 
-            // Generate and return the token
             return new JwtSecurityTokenHandler().WriteToken(token);
-
         }
     }
 }

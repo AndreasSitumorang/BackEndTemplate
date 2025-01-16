@@ -21,24 +21,25 @@ namespace WebAppService
         {
             webApplicationContext = new WebApplicationContext();
             string connectStr = webApplicationContext.Database.GetDbConnection().ConnectionString;
-            using (SqlConnection committrans = new SqlConnection(connectStr))
-            {
-                committrans.Open();
-                var transaction = committrans.BeginTransaction();
 
-                try
+            try
+            {
+                using (SqlConnection committrans = new SqlConnection(connectStr))
                 {
+                    committrans.Open();
+                    var transaction = committrans.BeginTransaction();
+
                     string query = "select * from users where  email = '" + users.email + "'";
                     CommonSerives common = new CommonSerives();
                     DataTable dataTable = common.ExecuteSqlToDataTable(connectStr, query);
 
                     if (dataTable.Rows.Count == 0)
                     {
+                        transaction.Rollback();
                         return false;
                     }
                     else
                     {
-
                         byte[] bytes = Encoding.UTF8.GetBytes(salt);
 
                         string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
@@ -52,13 +53,13 @@ namespace WebAppService
 
                         SqlParameter[] parameters =
                         {
-                        new SqlParameter("@username", users.username),
-                        new SqlParameter("@password", hashed),
-                        new SqlParameter("@salt", salt),
-                        new SqlParameter("@key", salt),
-                        new SqlParameter("@created_at", DateTime.Now),  // Pass DateTime directly
-                        new SqlParameter("@updated_at", DateTime.Now),  // Pass DateTime directly
-                        new SqlParameter("@email", users.email)
+                            new SqlParameter("@username", users.username),
+                            new SqlParameter("@password", hashed),
+                            new SqlParameter("@salt", salt),
+                            new SqlParameter("@key", salt),
+                            new SqlParameter("@created_at", DateTime.Now),  // Pass DateTime directly
+                            new SqlParameter("@updated_at", DateTime.Now),  // Pass DateTime directly
+                            new SqlParameter("@email", users.email)
                         };
 
                         SqlCommand cmd = new SqlCommand(query, committrans);
@@ -71,13 +72,13 @@ namespace WebAppService
                         return true;
                     }
                 }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    Console.WriteLine("An error occurred: " + ex.Message);
-                    return false;
-                }
-            }      
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+                return false;
+            }
+                
         }
     }
 }

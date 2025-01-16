@@ -17,6 +17,5 @@ namespace WebAppBLL
             var signUp = SignUpServices.SignupNewUser(user, salt);
             return signUp;
         }
-
     }
 }
