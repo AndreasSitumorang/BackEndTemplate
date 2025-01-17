@@ -41,7 +41,7 @@ namespace WebAppService
 
         public bool IsValidUser(string email, string pass)
         {
-            return true;
+            webApplicationContext = new WebApplicationContext();
             string connectStr = webApplicationContext.Database.GetDbConnection().ConnectionString;
 
             try
@@ -83,6 +83,7 @@ namespace WebAppService
             {
                 return false;
             }
+            return false;
         }
     }
 }
