@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import user_icon from "../Assets/person.png";
-import email_incon from "../Assets/email.png";
-import passwor_icon from "../Assets/password.png";
-import { useNavigate } from "react-router-dom";
+import email_icon from "../Assets/email.png";
+import password_icon from "../Assets/password.png";
+import { useSidebar } from '../Context/SidebarContext';
+import { useNavigate } from 'react-router-dom';
 import "../ui/styles/LoginSignUp.css";
 import axios from "axios";
 
-
 interface LoginFormProps {
-  // onLogin: (email: string, password: string) => void;
-  // onRegisterSuccess : (email: string, password: string, username: string) => void;
   onLoginSuccess: (token: string) => void;
 }
 
@@ -19,20 +17,18 @@ const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
+  const { setSidebarVisible } = useSidebar();
+
+  // Use useEffect here, not inside handleLogin function
+  useEffect(() => {
+    setSidebarVisible(false); // Hide sidebar on login page
+    return () => {
+      setSidebarVisible(true); // Show sidebar again when navigating away from login
+    };
+  }, [setSidebarVisible]);
 
   const handleLogin = async () => {
     try {
-      // const loginData = {
-      //   email,
-      //   password 
-      // };
-
-      // const response = await axios.post("https://localhost:44374/Login",JSON.stringify({ email, password }),{
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   }
-      // } );
-
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -40,13 +36,17 @@ const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
       };
       fetch("https://localhost:44374/Login", requestOptions)
         .then((response) => response.json())
-        .then((data) => console.log(data));
-
-      // const { token } = response.data;
-      // onLoginSuccess(token);
-      navigate("/dashboard");
+        .then((data) => {
+          console.log(data);
+          // Assuming token is in data.token
+          onLoginSuccess(data.token); // Call onLoginSuccess
+          navigate("/dashboard");
+        })
+        .catch((error) => {
+          console.error("Login failed:", error);
+        });
     } catch (error) {
-      console.error("Login failed:");
+      console.error("Error during login:", error);
     }
   };
 
@@ -57,29 +57,25 @@ const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
         username,
         password,
       });
-
-      // const { token } = response.data;
       navigate("/dashboard");
     } catch (error) {
-      console.error("Login failed:");
+      console.error("Sign Up failed:", error);
     }
   };
 
   return (
     <div className="container">
-      <div className="header">
+      <div className="headers">
         <div className="text">{action}</div>
         <div className="underline"></div>
       </div>
       <div className="inputs">
-        {action === "Login" ? (
-          <div></div>
-        ) : (
+        {action === "Login" ? null : (
           <div className="input">
             <img src={user_icon} alt="" />
             <input
               type="text"
-              placeholder="user name"
+              placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               autoComplete="off"
@@ -88,29 +84,27 @@ const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
         )}
 
         <div className="input">
-          <img src={email_incon} alt="" />
+          <img src={email_icon} alt="" />
           <input
             type="email"
-            placeholder="email"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="off"
           />
         </div>
         <div className="input">
-          <img src={passwor_icon} alt="" />
+          <img src={password_icon} alt="" />
           <input
             type="password"
-            placeholder="password"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="off"
           />
         </div>
       </div>
-      {action === "Sign Up" ? (
-        <div></div>
-      ) : (
+      {action === "Sign Up" ? null : (
         <div className="forgot-password">
           Lost Password?
           <span>Click Here</span>
@@ -135,9 +129,9 @@ const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
           Login
         </div>
       </div>
-      <div className="submit-main-container" onClick={action === "Sign Up" ? handleSignUp:handleLogin}>
+      <div className="submit-main-container" onClick={action === "Sign Up" ? handleSignUp : handleLogin}>
         <div className="submit-main">
-          {action === "Sign Up" ? "Resgister In" : "Come In"}
+          {action === "Sign Up" ? "Register" : "Log In"}
         </div>
       </div>
     </div>

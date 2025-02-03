@@ -24,7 +24,7 @@ border-radius: 13px;
 }
 
 
-.header {
+.headers {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,7 +35,7 @@ border-radius: 13px;
 
 
 .text{
-    color: #333;
+    color: #414040;
     font-size: 48px;
     font-weight: 700;
 }
@@ -44,7 +44,7 @@ border-radius: 13px;
 .underline{
     width: 70px;
     height: 6px;
-    background: #333;
+    background: #414040;
     border-radius: 9px;
 }
 

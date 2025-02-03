@@ -1,6 +1,17 @@
+
+body {
+  background-color: white; /* Set background color to white */
+  margin: 0; /* Optional: Remove default margin */
+  font-family: Arial, sans-serif; /* Optional: Set a default font */
+}
+.white-background {
+  background-color: white;
+   
+}
+/* 
 .container {
-    display: flex;
-    height: 100vh;
+
+    background-color: #f4f4f4;
   }
   
   .sidebar {
@@ -39,4 +50,4 @@
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
-  
+   */

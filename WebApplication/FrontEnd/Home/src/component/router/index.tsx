@@ -8,7 +8,7 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import Home from "../page/DashBoard";
-import Header from "../page/Header";
+// import Header from "../page/Header";
 import PathConstants from "./pathConstants";
 import LoginSignup from "../page/LoginSignUp";
 
@@ -27,10 +27,10 @@ const RoutesWeb: React.FC = () => {
         element={<LoginSignup onLoginSuccess={handleLoginSuccess} />}
       />
       <Route path={PathConstants.HOME} element={<Home />} />
-      <Route
+      {/* <Route
         path={PathConstants.ABOUT}
         element={<Header text="Welcome to My App" />}
-      />
+      /> */}
     </Routes>
   );
 };
