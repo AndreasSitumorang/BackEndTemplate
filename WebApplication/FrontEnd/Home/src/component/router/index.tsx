@@ -8,10 +8,11 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import Home from "../page/DashBoard";
-// import Header from "../page/Header";
+import SamplePage from "../page/SamplePage";
 import PathConstants from "./pathConstants";
 import LoginSignup from "../page/LoginSignUp";
-
+import Sidebar from "../Assets/Sidebar";
+import Header from "../Assets/Header";
 const RoutesWeb: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
 
@@ -26,11 +27,24 @@ const RoutesWeb: React.FC = () => {
         path={PathConstants.Login}
         element={<LoginSignup onLoginSuccess={handleLoginSuccess} />}
       />
-      <Route path={PathConstants.HOME} element={<Home />} />
-      {/* <Route
+      <Route
+        path={PathConstants.HOME}
+        element={
+          <>
+            <Sidebar />
+            <Home />
+          </>
+        }
+      />
+      <Route
         path={PathConstants.ABOUT}
-        element={<Header text="Welcome to My App" />}
-      /> */}
+        element={
+          <>
+            <Sidebar />
+            <SamplePage text="Welcome to My App" />
+          </>
+        }
+      />
     </Routes>
   );
 };

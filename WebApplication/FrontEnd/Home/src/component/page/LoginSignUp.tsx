@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import user_icon from "../Assets/person.png";
 import email_icon from "../Assets/email.png";
 import password_icon from "../Assets/password.png";
-import { useSidebar } from '../Context/SidebarContext';
 import { useNavigate } from 'react-router-dom';
 import "../ui/styles/LoginSignUp.css";
 import axios from "axios";
@@ -17,15 +16,7 @@ const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
-  const { setSidebarVisible } = useSidebar();
 
-  // Use useEffect here, not inside handleLogin function
-  useEffect(() => {
-    setSidebarVisible(false); // Hide sidebar on login page
-    return () => {
-      setSidebarVisible(true); // Show sidebar again when navigating away from login
-    };
-  }, [setSidebarVisible]);
 
   const handleLogin = async () => {
     try {
