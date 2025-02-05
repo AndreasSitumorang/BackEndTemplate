@@ -1,6 +1,6 @@
 import React from "react";
 import "../ui/styles/Sidebar.css"; // You can create a separate CSS file for styling
-import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Sidebar: React.FC = () => {
   return (
@@ -26,9 +26,10 @@ const Sidebar: React.FC = () => {
     // </div>
     <div id="nav-bar" className="sidebar">
       <input id="nav-toggle" type="checkbox" />
-      <div id="nav-header" className="custom-menu" >
-        <a id="nav-title" href="https://codepen.io" target="_blank">
-          C<i className="fab fa-codepen"></i>DEPEN
+      <div id="nav-header" className="custom-menu">
+        <a id="nav-title" target="_blank">
+          {/* C<i className="fab fa-codepen">Web Template</i>DEPEN */}
+          Web Template
         </a>
         <label>
           <span id="nav-toggle-burger"></span>
@@ -38,37 +39,53 @@ const Sidebar: React.FC = () => {
       <div id="nav-content">
         <div className="nav-button">
           <i className="fas fa-palette"></i>
-          <span>Your Work</span>
+          <Link to="/about">
+            <span>Your Work</span>
+          </Link>
         </div>
         <div className="nav-button">
           <i className="fas fa-images"></i>
-          <span>Assets</span>
+          <Link to="/formregister">
+            <span>Assets</span>
+          </Link>
         </div>
         <div className="nav-button">
           <i className="fas fa-thumbtack"></i>
-          <span>Pinned Items</span>
+          <Link to="/dashboard">
+            <span>Pinned Items</span>
+          </Link>
         </div>
         <hr />
         <div className="nav-button">
           <i className="fas fa-heart"></i>
-          <span>Following</span>
+          <Link to="/about">
+            <span>Following</span>
+          </Link>
         </div>
         <div className="nav-button">
           <i className="fas fa-chart-line"></i>
-          <span>Trending</span>
+          <Link to="/about">
+            <span>Trending</span>
+          </Link>
         </div>
         <div className="nav-button">
           <i className="fas fa-fire"></i>
-          <span>Challenges</span>
+          <Link to="/about">
+            <span>Challenges</span>
+          </Link>
         </div>
         <div className="nav-button">
           <i className="fas fa-magic"></i>
-          <span>Spark</span>
+          <Link to="/about">
+            <span>Spark</span>
+          </Link>
         </div>
         <hr />
         <div className="nav-button">
           <i className="fas fa-gem"></i>
-          <span>Codepen Pro</span>
+          <Link to="/about">
+            <span>Codepen Pro</span>
+          </Link>
         </div>
         <div id="nav-content-highlight"></div>
       </div>
