@@ -7,9 +7,16 @@ namespace WebAppService
 {
     public class PersonServices
     {
-        public List<Person> GetAllPerson()
+        private readonly WebApplicationContext _context;
+
+        public PersonServices(WebApplicationContext context)
         {
-            var data = new List<Person>();
+            _context = context;
+        }
+
+        public List<Users> GetAllPerson()
+        {
+            var data = _context.Users.ToList();
             return data;
         }
 

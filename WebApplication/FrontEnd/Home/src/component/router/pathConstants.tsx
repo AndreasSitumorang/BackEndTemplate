@@ -2,9 +2,10 @@ import React from "react";
 
 //Location name path for general
 const PathConstants = {
-  Login: "login",
+  Login: "/",
   ABOUT: "about",
   HOME: "dashboard",
+  FORM: "formregister",
 };
 
 export default PathConstants;

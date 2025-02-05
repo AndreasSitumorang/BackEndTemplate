@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../ui/styles/MainPage.css";
+import "../ui/styles/GridTable.css";
 
 interface Data {
   id: number;
@@ -11,7 +11,7 @@ const Dashboard: React.FC = () => {
   const [data, setData] = useState<Data[]>([]); // Always handle data as an array
 
   useEffect(() => {
-    fetch("https://localhost:44374/getItemsByName")
+    fetch("https://localhost:44374/getAllItems")
       .then((res) => res.json())
       .then((responseData) => {
         // Check if the response is an array or a single object
@@ -26,7 +26,7 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className="white-background">
+    <div >
       <table>
         <thead>
           <tr>

@@ -15,27 +15,57 @@ namespace WebAppService
     {
         WebApplicationContext webApplicationContext;
 
-        public DayoffServices(WebApplicationContext webApplicationContext)
+        public bool DayoffProcess(DayOffForm dayOff)
         {
             this.webApplicationContext = webApplicationContext;
             webApplicationContext = new WebApplicationContext();
             string connectStr = webApplicationContext.Database.GetDbConnection().ConnectionString;
-            using (SqlConnection committrans = new SqlConnection(connectStr))
-            {
-                committrans.Open();
-                var transaction = committrans.BeginTransaction();
 
-                try
+            try
+            {
+                using (var dbContext = new WebApplicationContext())
                 {
-                    transaction.Commit();
-                    committrans.Close();
+                    dbContext.DayOffForm.Add(dayOff);
+                    dbContext.SaveChanges();
+                    return true;
                 }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    Console.WriteLine("An error occurred: " + ex.Message);
-                }
+            }catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+                return false;
             }
+
+
+
+            //using (SqlConnection committrans = new SqlConnection(connectStr))
+            //{
+            //    committrans.Open();
+            //    var transaction = committrans.BeginTransaction();
+
+            //    try
+            //    {
+            //        string query = "INSERT INTO dayoff (firstName, lastName, startDate, endDate) VALUES (@FirstName, @LastName, @StartDate, @EndDate)";
+            //        using (SqlCommand cmd = new SqlCommand(query, committrans))
+            //        {
+            //            cmd.Parameters.AddWithValue("@FirstName", dayOff.firstName);
+            //            cmd.Parameters.AddWithValue("@LastName", dayOff.lastName);
+            //            cmd.Parameters.AddWithValue("@StartDate", dayOff.startDate);
+            //            cmd.Parameters.AddWithValue("@EndDate", dayOff.endDate);
+            //            cmd.Transaction = transaction;
+            //            cmd.ExecuteNonQuery();
+            //        }
+
+            //        transaction.Commit();
+            //        committrans.Close();
+            //        return true;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        transaction.Rollback();
+            //        Console.WriteLine("An error occurred: " + ex.Message);
+            //        return false;
+            //    }
+            //}
         }
     }
 }

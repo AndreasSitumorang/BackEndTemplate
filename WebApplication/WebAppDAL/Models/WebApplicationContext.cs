@@ -19,6 +19,9 @@ namespace WebAppDAL.Models
 
         public virtual DbSet<Person> Persons { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<DayOffForm> DayOffForm { get; set; }
+        public virtual DbSet<Items> Items { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

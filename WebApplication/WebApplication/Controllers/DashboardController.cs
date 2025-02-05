@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAppBLL;
 using WebAppDAL.Models;
 
 
@@ -30,9 +32,11 @@ namespace WebApplication.Controllers
 
         [Route("getAllPersons")]
         [HttpGet]
-        public List<Person> getAllPerson()
+        //[Authorize]
+        public List<Users> getAllPerson()
         {
-            return personBLL.getAllPerson();
+            var data = new PersonBLL();
+            return data.getAllPerson();
         }
 
         [Route("getonePerson/{id}")]
@@ -44,6 +48,7 @@ namespace WebApplication.Controllers
 
         [Route("getonePersonName/{name}")]
         [HttpGet]
+        [Authorize]
         public Person getonePerson(string name)
         {
             return personBLL.getOnePersonByName(name);

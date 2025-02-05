@@ -33,7 +33,7 @@ namespace WebAppService
                     CommonSerives common = new CommonSerives();
                     DataTable dataTable = common.ExecuteSqlToDataTable(connectStr, query);
 
-                    if (dataTable.Rows.Count == 0)
+                    if (dataTable.Rows.Count != 0)
                     {
                         transaction.Rollback();
                         return false;

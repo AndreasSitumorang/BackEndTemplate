@@ -14,13 +14,12 @@ namespace WebAppBLL
 
         public PersonBLL()
         {
-            PersonServices = new WebAppService.PersonServices();
 
             var _configPerson = new MapperConfiguration(cfg => cfg.CreateMap<Person, Person>().ReverseMap());
 
             PersonMapper = new AutoMapper.Mapper(_configPerson);
         }
-        public List<Person> getAllPerson()
+        public List<Users> getAllPerson()
         {
             return PersonServices.GetAllPerson(); //personDAL.GetAllPerson();
         }
