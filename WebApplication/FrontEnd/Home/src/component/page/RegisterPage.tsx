@@ -2,21 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../ui/styles/RegisterPage.css";
+import Title from "../Assets/Title";
 
 const RegisterPage = () => {
   return (
     <div>
-      <div className="Register-center">
-        <h1>Register Page</h1>
-      </div>
       <div className="page-wrapper bg-gra-03 p-t-45 p-b-50">
         <div className="wrapper wrapper--w790">
-          <div >
-            <div className="Register-center">
-              <div className="card-heading">
-                <h2 className="title">Event Registration Form</h2>
-              </div>
-            </div>
+          <div>
+            <Title modulename={"Register Form"} />
 
             <div>
               <form className="row g-3">
