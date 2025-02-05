@@ -13,7 +13,7 @@ namespace WebApplication.Controllers
         {
             return View();
         }
-
+        [Authorize] // add authorize for general
         [HttpGet("getAllItems")]
         public IActionResult GetAllData()
         {
@@ -30,8 +30,8 @@ namespace WebApplication.Controllers
             return Ok(data);
         }
 
-        [HttpGet("getItemsByName")]
-        [Authorize]
+        [Authorize] //if need specific user access, add claims by role or menu access
+        [HttpGet("getItemsByName")]        
         public IActionResult GetByName()
         {
             var Items = new ItemsBLL();

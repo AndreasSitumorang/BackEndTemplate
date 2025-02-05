@@ -9,6 +9,7 @@ using WebAppDAL.Models;
 using WebAppBLL;
 using System.ServiceModel.Channels;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Security.Cryptography.X509Certificates;
 
 namespace WebApplication.Controllers
 {
@@ -75,6 +76,7 @@ namespace WebApplication.Controllers
             //);
 
             //return new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
 
             // Validate the key size, ensuring it's at least 256 bits (32 bytes)
@@ -89,9 +91,8 @@ namespace WebApplication.Controllers
             // Create claims
             var claims = new[]
             {
-            new Claim(ClaimTypes.Name, username),  // Claim for the username
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())  // JWT ID
-        };
+                new Claim(ClaimTypes.Name, username),  // Claim for the username
+            };
 
             // Signing credentials
             var signingCredentials = new SigningCredentials(
@@ -100,17 +101,18 @@ namespace WebApplication.Controllers
             );
 
             // Create the JWT token
-            var token = new JwtSecurityToken(
-                issuer: issuer,
-                audience: audience,
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(1),  // Token expiry time (1 hour in this case)
-                signingCredentials: signingCredentials
-            );
+            var token = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddHours(1),  // Token expiry time (1 hour in this case)
+                SigningCredentials = signingCredentials,
+                Issuer = issuer,
+            };
 
             // Create a JWT token string
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenString = tokenHandler.WriteToken(token);
+            var tokenDescriptor = tokenHandler.CreateToken(token);
+            // After creating the token, write it to a string
+            var tokenString = tokenHandler.WriteToken(tokenDescriptor);
 
             // Return the token string (This is your Bearer token)
             return tokenString;

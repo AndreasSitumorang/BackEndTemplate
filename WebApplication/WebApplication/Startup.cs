@@ -28,7 +28,6 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddAuthorization();
 
 
             //Connection
@@ -54,21 +53,19 @@ namespace WebApplication
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-
-
             .AddJwtBearer(options =>
             {
-                var key = Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]);
+                var test = Configuration["Jwt:Key"];
+                var key = Encoding.UTF8.GetBytes(test);
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
+                    ValidateIssuer = false,
+                    ValidateAudience = false, // optional can be null
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["Jwt:Issuer"],
-                    ValidAudience = Configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
+                    ValidIssuer = Configuration["Jwt:Issuer"], //base on url website
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
                     ClockSkew = TimeSpan.Zero
 
                 };
@@ -93,9 +90,9 @@ namespace WebApplication
 
             app.UseRouting();
 
-            app.UseAuthorization();
 
-            app.UseAuthentication();
+            app.UseAuthentication(); // sequence no1
+            app.UseAuthorization(); // sequence no2
 
             app.UseCors();
 
