@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import user_icon from "../Assets/person.png";
 import email_icon from "../Assets/email.png";
 import password_icon from "../Assets/password.png";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import "../ui/styles/LoginSignUp.css";
 import axios from "axios";
 
@@ -17,33 +17,43 @@ const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
-
   const handleLogin = async () => {
-    try {
-      const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      };
-      fetch("https://localhost:44374/Login", requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          // Assuming token is in data.token
-          onLoginSuccess(data.token); // Call onLoginSuccess
-          navigate("/dashboard");
-        })
-        .catch((error) => {
-          console.error("Login failed:", error);
-        });
-    } catch (error) {
-      console.error("Error during login:", error);
-    }
+  // try {
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({ email, password }),
+    // };
+    // fetch("http://localhost:5000/Login", requestOptions)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+
+    //     // Assuming token is in data.token
+    //     onLoginSuccess(data.token); // Call onLoginSuccess
+    //     navigate("/dashboard");
+    //   })
+    //   .catch((error) => {
+    //     console.error("Login failed:", error);
+    //   });
+    fetch("http://localhost:5000/Login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        const ticket = result;
+        localStorage.setItem("token", ticket);
+        navigate("/about");
+       });
+      // } catch (error) {
+      //   console.error("Error during login:", error);
+      // }
   };
 
   const handleSignUp = async () => {
     try {
-      const response = await axios.post("https://localhost:44374/Signup", {
+      const response = await axios.post("http://localhost:5000/Signup", {
         email,
         username,
         password,
@@ -120,7 +130,10 @@ const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
           Login
         </div>
       </div>
-      <div className="submit-main-container" onClick={action === "Sign Up" ? handleSignUp : handleLogin}>
+      <div
+        className="submit-main-container"
+        onClick={action === "Sign Up" ? handleSignUp : handleLogin}
+      >
         <div className="submit-main">
           {action === "Sign Up" ? "Register" : "Log In"}
         </div>

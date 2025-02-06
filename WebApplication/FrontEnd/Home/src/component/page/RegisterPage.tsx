@@ -1,17 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
+import dayjs, { Dayjs } from "dayjs";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../ui/styles/RegisterPage.css";
 import Title from "../Assets/Title";
+import Dropdown from "react-select";
+import {
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+} from "@mui/material";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider, DesktopDatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
+interface Option {
+  value: string;
+  label: string;
+}
 
 const RegisterPage = () => {
+  const data: Option[] = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+  const [age, setAge] = React.useState("");
+
+  const handleChangeAge = (event: SelectChangeEvent) => {
+    setAge(event.target.value as string);
+  };
+
+  const [value, setValue] = React.useState("2022-04-17");
+  // const handleDateChange = (newDate) => {
+  //   setDate(newDate);
+  // };
+
+  const handleChange = (selectedOption: Option | null) => {
+    if (selectedOption) {
+      console.log("Selected:", selectedOption);
+    }
+  };
+
   return (
     <div>
       <div className="page-wrapper bg-gra-03 p-t-45 p-b-50">
         <div className="wrapper wrapper--w790">
           <div>
             <Title modulename={"Register Form"} />
-
             <div>
               <form className="row g-3">
                 <div className="col-md-6">
@@ -48,20 +91,93 @@ const RegisterPage = () => {
                     placeholder="Apartment, studio, or floor"
                   />
                 </div>
-                <div className="col-md-6">
-                  <label className="form-label">City</label>
-                  <input type="text" className="form-control" id="inputCity" />
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="female"
+                  name="radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label="Male"
+                  />
+                  <FormControlLabel
+                    value="other"
+                    control={<Radio />}
+                    label="Other"
+                  />
+                </RadioGroup>
+
+                <div className="row">
+                  <div className="col-md-6">
+                    <label className="form-label">City</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="inputCity"
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    <label className="form-label">State</label>
+                    <Dropdown<Option>
+                      options={data}
+                      onChange={handleChange}
+                      isSearchable={true} // Enable search functionality
+                      placeholder="Select a fruit"
+                    />
+                  </div>
+                  <div className="col-md-2">
+                    <label className="form-label">Zip</label>
+                    <input type="text" className="form-control" id="inputZip" />
+                  </div>
                 </div>
-                <div className="col-md-4">
-                  <label className="form-label">State</label>
-                  <select id="inputState" className="form-select">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                  </select>
+
+                <div className="row">
+                  <div className="col-sm-5 col-md-6">
+                    <label className="form-label">Drop Down</label>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={age}
+                      label="Age"
+                      fullWidth
+                      onChange={handleChangeAge}
+                    >
+                      <MenuItem value={10}>Ten</MenuItem>
+                      <MenuItem value={20}>Twenty</MenuItem>
+                      <MenuItem value={30}>Thirty</MenuItem>
+                    </Select>
+                  </div>
+                  <div className="col-sm 5 ">
+                    <div className="d-flex flex-column justify-content-center h-100">
+                      <label className="form-label mb-2">Date Picker</label>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker label="Basic date picker" />
+                      </LocalizationProvider>
+                    </div>
+                  </div>
+                  <div className="col-sm 5">
+                    <div className="d-flex flex-column justify-content-center h-100">
+                      <label className="form-label mb-2">Date Picker</label>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker label="Basic date picker" />
+                      </LocalizationProvider>
+                    </div>
+                  </div>
                 </div>
-                <div className="col-md-2">
-                  <label className="form-label">Zip</label>
-                  <input type="text" className="form-control" id="inputZip" />
+
+                <div className="mb-3">
+                  <label className="form-label">Example textarea</label>
+                  <textarea
+                    className="form-control"
+                    id="exampleFormControlTextarea1"
+                    rows={3}
+                  ></textarea>
                 </div>
                 <div className="col-12">
                   <div className="form-check">

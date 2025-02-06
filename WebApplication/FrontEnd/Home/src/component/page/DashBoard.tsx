@@ -11,7 +11,10 @@ const Dashboard: React.FC = () => {
   const [data, setData] = useState<Data[]>([]); // Always handle data as an array
 
   useEffect(() => {
-    const headers = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImRhdGF1c2VyMzIxIiwibmJmIjoxNzM4NzQ3NTY3LCJleHAiOjE3Mzg3NTExNjcsImlhdCI6MTczODc0NzU2NywiaXNzIjoiV2ViVGVtcGxhdGUifQ._g5NVqklK6oWcAHmB3mCcxaog_LxkxXrZxe-yUIxUL8' };
+    const token = localStorage.getItem("token");
+
+    console.log(token);
+    const headers = { 'Authorization': 'Bearer ' + token };
     fetch("http://localhost:5000/getAllItems", { headers })
       .then((res) => res.json())
       .then((responseData) => {
