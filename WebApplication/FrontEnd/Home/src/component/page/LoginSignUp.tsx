@@ -5,12 +5,10 @@ import password_icon from "../Assets/password.png";
 import { useNavigate } from "react-router-dom";
 import "../ui/styles/LoginSignUp.css";
 import axios from "axios";
+import PathConstants from "../router/pathConstants";
 
-interface LoginFormProps {
-  onLoginSuccess: (token: string) => void;
-}
 
-const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
+const LoginSignup = () => {
   const [action, setAction] = useState("Login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,23 +16,6 @@ const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-  // try {
-    // const requestOptions = {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ email, password }),
-    // };
-    // fetch("http://localhost:5000/Login", requestOptions)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-
-    //     // Assuming token is in data.token
-    //     onLoginSuccess(data.token); // Call onLoginSuccess
-    //     navigate("/dashboard");
-    //   })
-    //   .catch((error) => {
-    //     console.error("Login failed:", error);
-    //   });
     fetch("http://localhost:5000/Login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -44,21 +25,23 @@ const LoginSignup: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
       .then((result) => {
         const ticket = result;
         localStorage.setItem("token", ticket);
-        navigate("/about");
+        navigate(PathConstants.ABOUT);
        });
-      // } catch (error) {
-      //   console.error("Error during login:", error);
-      // }
   };
 
   const handleSignUp = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/Signup", {
-        email,
-        username,
-        password,
-      });
-      navigate("/dashboard");
+      fetch("http://localhost:5000/Signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      })
+        .then((response) => response.json())
+        .then((result) => {
+          const ticket = result;
+          localStorage.setItem("token", ticket);
+          navigate(PathConstants.ABOUT);
+         });
     } catch (error) {
       console.error("Sign Up failed:", error);
     }

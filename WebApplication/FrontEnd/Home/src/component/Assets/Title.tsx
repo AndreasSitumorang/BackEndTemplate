@@ -6,7 +6,7 @@ interface TitleProps {
 
 const Title: React.FC<TitleProps> = ({ modulename }) => {
   return (
-    <div className="Register-center">
+    <div className="Register-left" style={{ padding: "5px", margin: "10px" }}>
       <div className="card-heading">
         <h1>{modulename}</h1>
       </div>

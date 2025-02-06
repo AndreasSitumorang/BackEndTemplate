@@ -1,4 +1,5 @@
 import React from "react";
+import Title from "../Assets/Title";
 
 interface SamplePageProps {
     text: string;
@@ -6,7 +7,7 @@ interface SamplePageProps {
  const SamplePage: React.FC<SamplePageProps> = ({ text }) => {
   return (
     <div>
-      <h1>Sample Page {text}</h1>
+      <Title modulename={text} />
     </div>
   );
 

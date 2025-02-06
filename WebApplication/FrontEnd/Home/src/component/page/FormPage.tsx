@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import dayjs, { Dayjs } from "dayjs";
-import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../ui/styles/RegisterPage.css";
 import Title from "../Assets/Title";
@@ -13,7 +11,6 @@ import {
   MenuItem,
   SelectChangeEvent,
 } from "@mui/material";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -23,7 +20,7 @@ interface Option {
   label: string;
 }
 
-const RegisterPage = () => {
+const FormDataPage = () => {
   const data: Option[] = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
@@ -38,10 +35,6 @@ const RegisterPage = () => {
     setAge(event.target.value as string);
   };
 
-  const [value, setValue] = React.useState("2022-04-17");
-  // const handleDateChange = (newDate) => {
-  //   setDate(newDate);
-  // };
 
   const handleChange = (selectedOption: Option | null) => {
     if (selectedOption) {
@@ -50,13 +43,13 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
+    <div >
       <div className="page-wrapper bg-gra-03 p-t-45 p-b-50">
         <div className="wrapper wrapper--w790">
-          <div>
-            <Title modulename={"Register Form"} />
+          <div >
+            <Title modulename={"Template Form"} />
             <div>
-              <form className="row g-3">
+              <form className="row g-3" style={{ padding: "5px", margin: "10px", border: "1px solid black", borderRadius: "10px" }}>
                 <div className="col-md-6">
                   <label className="form-label">Email</label>
                   <input
@@ -157,7 +150,7 @@ const RegisterPage = () => {
                     <div className="d-flex flex-column justify-content-center h-100">
                       <label className="form-label mb-2">Date Picker</label>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker label="Basic date picker" />
+                        <DatePicker/>
                       </LocalizationProvider>
                     </div>
                   </div>
@@ -165,7 +158,7 @@ const RegisterPage = () => {
                     <div className="d-flex flex-column justify-content-center h-100">
                       <label className="form-label mb-2">Date Picker</label>
                       <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker label="Basic date picker" />
+                        <DatePicker/>
                       </LocalizationProvider>
                     </div>
                   </div>
@@ -191,7 +184,7 @@ const RegisterPage = () => {
                 </div>
                 <div className="col-12">
                   <button type="submit" className="btn btn-primary">
-                    Sign in
+                    Submit
                   </button>
                 </div>
               </form>
@@ -203,4 +196,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default FormDataPage;
