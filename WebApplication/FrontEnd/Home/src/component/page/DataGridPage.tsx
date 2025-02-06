@@ -5,10 +5,14 @@ import Title from "../Assets/Title";
 interface Data {
   id: number;
   name: string;
-  sellerId: number;
+  sellerId: number;  
+}
+interface DataProps {
+  namePage: string;
 }
 
-const DataGrid: React.FC = () => {
+
+const DataGrid: React.FC<DataProps> = ({ namePage })   => {
   const [data, setData] = useState<Data[]>([]); // Always handle data as an array
 
   useEffect(() => {
@@ -34,7 +38,7 @@ const DataGrid: React.FC = () => {
     <div>
       <div className="wrapper wrapper--w790">
         <div >
-          <Title modulename={"Template Data Grid"} />
+          <Title modulename={namePage} />
           <div
             style={{
               padding: "5px",

@@ -2,12 +2,12 @@ import React from "react";
 import Title from "../Assets/Title";
 
 interface SamplePageProps {
-    text: string;
+  namePage: string;
 }
- const SamplePage: React.FC<SamplePageProps> = ({ text }) => {
+ const SamplePage: React.FC<SamplePageProps> = ({ namePage }) => {
   return (
     <div>
-      <Title modulename={text} />
+      <Title modulename={namePage} />
     </div>
   );
 

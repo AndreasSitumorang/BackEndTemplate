@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import  { useState } from "react";
 import user_icon from "../Assets/person.png";
 import email_icon from "../Assets/email.png";
 import password_icon from "../Assets/password.png";
 import { useNavigate } from "react-router-dom";
 import "../ui/styles/LoginSignUp.css";
-import axios from "axios";
 import PathConstants from "../router/pathConstants";
 
 
-const LoginSignup = () => {
+const LoginSignup = ()  => {
+
   const [action, setAction] = useState("Login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,14 +34,12 @@ const LoginSignup = () => {
       fetch("http://localhost:5000/Signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, username }),
       })
-        .then((response) => response.json())
         .then((result) => {
-          const ticket = result;
-          localStorage.setItem("token", ticket);
-          navigate(PathConstants.ABOUT);
-         });
+          alert("Signup successful!");
+          window.location.reload(); 
+        })
     } catch (error) {
       console.error("Sign Up failed:", error);
     }

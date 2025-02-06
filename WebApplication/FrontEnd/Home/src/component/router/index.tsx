@@ -9,22 +9,13 @@ import SamplePage from "../page/SamplePage";
 import PathConstants from "./pathConstants";
 import Sidebar from "../Assets/Sidebar";
 import Header from "../Assets/Header";
-import RegisterPage from "../page/FormPage";
+import FormPage from "../page/FormPage";
 import Footer from "../Assets/Footer";
-const RoutesWeb: React.FC = () => {
-  // const [token, setToken] = useState<string | null>(null);
 
-  // const handleLoginSuccess = (newToken: string) => {
-  //   setToken(newToken);
-  //   // You may want to redirect the user or perform other actions on successful login
-  // };
+const RoutesWeb: React.FC = () => {
 
   return (
     <Routes>
-      {/* <Route
-        path={PathConstants.Login}
-        element={<LoginSignup onLoginSuccess={handleLoginSuccess} />}
-      /> */}
       <Route
         path={PathConstants.HOME}
         element={
@@ -32,7 +23,7 @@ const RoutesWeb: React.FC = () => {
             <Header />
             <Sidebar />
             <div className="main-content">
-              <Home />
+              <Home namePage="Data Grid Template" />
             </div>
             <Footer />
           </>
@@ -45,7 +36,7 @@ const RoutesWeb: React.FC = () => {
             <Header />
             <Sidebar />
             <div className="main-content">
-              <SamplePage text="Title Template" />
+              <SamplePage namePage="Title Template" />
             </div>
             <Footer />
           </>
@@ -58,7 +49,7 @@ const RoutesWeb: React.FC = () => {
             <Header />
             <Sidebar />
             <div className="main-content">
-              <RegisterPage/>
+              <FormPage namePage="Form Template" />
             </div>
             <Footer />
           </>

@@ -19,8 +19,11 @@ interface Option {
   value: string;
   label: string;
 }
+interface FormDataPageProps {
+  namePage: string;
+}
 
-const FormDataPage = () => {
+const FormDataPage : React.FC<FormDataPageProps> = ({ namePage })  => {
   const data: Option[] = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
@@ -47,7 +50,7 @@ const FormDataPage = () => {
       <div className="page-wrapper bg-gra-03 p-t-45 p-b-50">
         <div className="wrapper wrapper--w790">
           <div >
-            <Title modulename={"Template Form"} />
+            <Title modulename={namePage} />
             <div>
               <form className="row g-3" style={{ padding: "5px", margin: "10px", border: "1px solid black", borderRadius: "10px" }}>
                 <div className="col-md-6">
