@@ -1,34 +1,25 @@
 import React from "react";
 import "../ui/styles/Sidebar.css"; // You can create a separate CSS file for styling
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Profile from "../Assets/Image/1-intro-photo-final.jpg";
+import PathConstants from "../router/pathConstants";
+
+interface sidebarProps {
+  namePage: string;
+}
+
 
 const Sidebar: React.FC = () => {
+  const username = localStorage.getItem("username");
+  const navigate = useNavigate();
+
+
+
   return (
-    // <div className="wrapper d-flex align-items-stretch">
-    //   <div className="sidebar">
-    //     <div className="custom-menu">
-    //       <button
-    //         type="button"
-    //         id="sidebarCollapse"
-    //         className="btn btn-primary"
-    //       >
-    //         <i className="fa fa-bars"></i>
-    //         <span className="sr-only">Toggle Menu</span>
-    //       </button>
-    //     </div>
-    //     <ul>
-    //       <li>Home</li>
-    //       <li>Dashboard</li>
-    //       <li>Settings</li>
-    //       <li>Logout</li>
-    //     </ul>
-    //   </div>
-    // </div>
     <div id="nav-bar" className="sidebar">
       <input id="nav-toggle" type="checkbox" />
       <div id="nav-header" className="custom-menu">
         <a id="nav-title" target="_blank">
-          {/* C<i className="fab fa-codepen">Web Template</i>DEPEN */}
           Web Template
         </a>
         <label>
@@ -37,53 +28,53 @@ const Sidebar: React.FC = () => {
         <hr />
       </div>
       <div id="nav-content">
-        <div className="nav-button">
+        <div className="nav-button" >
           <i className="fas fa-palette"></i>
-          <Link to="/about">
+          <Link to={PathConstants.ABOUT}>
             <span>Your Work</span>
           </Link>
         </div>
-        <div className="nav-button">
+        <div className="nav-button" >
           <i className="fas fa-images"></i>
-          <Link to="/formregister">
+          <Link to={PathConstants.FORM}>
             <span>Assets</span>
           </Link>
         </div>
-        <div className="nav-button">
-          <i className="fas fa-thumbtack"></i>
-          <Link to="/dashboard">
+        <div className="nav-button" >
+          <i className="fas fa-thumbtack" ></i>
+          <Link to={PathConstants.HOME}>
             <span>Pinned Items</span>
           </Link>
         </div>
         <hr />
-        <div className="nav-button">
+        <div className="nav-button" >
           <i className="fas fa-heart"></i>
-          <Link to="/about">
+          <Link to={PathConstants.ABOUT}>
             <span>Following</span>
           </Link>
         </div>
-        <div className="nav-button">
+        <div className="nav-button" >
           <i className="fas fa-chart-line"></i>
-          <Link to="/about">
+          <Link to={PathConstants.ABOUT}>
             <span>Trending</span>
           </Link>
         </div>
-        <div className="nav-button">
+        <div className="nav-button" >
           <i className="fas fa-fire"></i>
-          <Link to="/about">
+          <Link to={PathConstants.ABOUT}>
             <span>Challenges</span>
           </Link>
         </div>
-        <div className="nav-button">
+        <div className="nav-button" >
           <i className="fas fa-magic"></i>
-          <Link to="/about">
+          <Link to={PathConstants.ABOUT}>
             <span>Spark</span>
           </Link>
         </div>
         <hr />
-        <div className="nav-button">
+        <div className="nav-button" >
           <i className="fas fa-gem"></i>
-          <Link to="/about">
+          <Link to={PathConstants.ABOUT}>
             <span>Codepen Pro</span>
           </Link>
         </div>
@@ -93,16 +84,10 @@ const Sidebar: React.FC = () => {
       <div id="nav-footer">
         <div id="nav-footer-heading">
           <div id="nav-footer-avatar">
-            <img src="https://gravatar.com/avatar/4474ca42d303761c2901fa819c4f2547" />
+            <img src={Profile} alt=""  />
           </div>
           <div id="nav-footer-titlebox">
-            <a
-              id="nav-footer-title"
-              href="https://codepen.io/uahnbu/pens/public"
-              target="_blank"
-            >
-              uahnbu
-            </a>
+              {username}
             <span id="nav-footer-subtitle">Admin</span>
           </div>
           <label>
@@ -116,3 +101,4 @@ const Sidebar: React.FC = () => {
 };
 
 export default Sidebar;
+

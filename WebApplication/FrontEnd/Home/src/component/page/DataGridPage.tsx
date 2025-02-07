@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../ui/styles/GridTable.css";
 import Title from "../Assets/Title";
+import CheckToken from "../Context/CheckToken";
 
 interface Data {
   id: number;
@@ -10,7 +11,6 @@ interface Data {
 interface DataProps {
   namePage: string;
 }
-
 
 const DataGrid: React.FC<DataProps> = ({ namePage })   => {
   const [data, setData] = useState<Data[]>([]); // Always handle data as an array
@@ -34,8 +34,18 @@ const DataGrid: React.FC<DataProps> = ({ namePage })   => {
       });
   }, []);
 
+  const isTokenActive = CheckToken();
+
+  const handlerefresh = () => {
+    console.log("Status Token", isTokenActive);
+
+    if (!isTokenActive) {
+      window.location.reload();
+    }
+  };
+
   return (
-    <div>
+    <div onClick={handlerefresh} >
       <div className="wrapper wrapper--w790">
         <div >
           <Title modulename={namePage} />

@@ -1,58 +1,73 @@
-import React, { useState } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 import Home from "../page/DataGridPage";
 import SamplePage from "../page/SamplePage";
 import PathConstants from "./pathConstants";
 import Sidebar from "../Assets/Sidebar";
-import Header from "../Assets/Header";
 import FormPage from "../page/FormPage";
-import Footer from "../Assets/Footer";
+import LoginSignup from "../page/LoginSignUp";
 
-const RoutesWeb: React.FC = () => {
+interface RoutesWebProps {
+  isAuthenticated: boolean;
+}
+const RoutesWeb: React.FC<RoutesWebProps> = ({ isAuthenticated }) => {
+  useEffect(() => {
+    // Clear the URL if user is not authenticated
+    if (!isAuthenticated) {
+      window.history.replaceState({}, "", PathConstants.LOGIN); // Assuming LOGIN is the route for the login page
+    }
+  }, [isAuthenticated]);
+
+
 
   return (
     <Routes>
       <Route
         path={PathConstants.HOME}
         element={
-          <>
-            <Header />
-            <Sidebar />
-            <div className="main-content">
-              <Home namePage="Data Grid Template" />
+          isAuthenticated ? (
+            <div className="app-container">
+              <Sidebar />
+              {/* <div className="main-content" onChange={handrefresh}> */}
+              <div className="main-content">
+                <Home namePage="Data Grid Template" />
+              </div>
             </div>
-            <Footer />
-          </>
+          ) : (
+            <LoginSignup />
+          )
         }
       />
       <Route
         path={PathConstants.ABOUT}
         element={
-          <>
-            <Header />
-            <Sidebar />
-            <div className="main-content">
-              <SamplePage namePage="Title Template" />
+          isAuthenticated ? (
+            <div className="app-container">
+              <Sidebar />
+              {/* <div className="main-content" onChange={handrefresh}> */}
+              <div className="main-content">
+                <SamplePage namePage="Title Template" />
+              </div>
             </div>
-            <Footer />
-          </>
+          ) : (
+            <LoginSignup />
+          )
         }
       />
-            <Route
+      <Route
         path={PathConstants.FORM}
         element={
-          <>
-            <Header />
-            <Sidebar />
-            <div className="main-content">
-              <FormPage namePage="Form Template" />
+          isAuthenticated ? (
+            <div className="app-container">
+              <Sidebar />
+              {/* <div className="main-content" onChange={handrefresh}> */}
+              <div className="main-content">
+                <FormPage namePage="Form Template" />
+              </div>
             </div>
-            <Footer />
-          </>
+          ) : (
+            <LoginSignup />
+          )
         }
       />
     </Routes>

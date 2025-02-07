@@ -14,7 +14,7 @@ import {
 import { LocalizationProvider, DesktopDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
+import CheckToken from "../Context/CheckToken";
 interface Option {
   value: string;
   label: string;
@@ -44,6 +44,36 @@ const FormDataPage : React.FC<FormDataPageProps> = ({ namePage })  => {
       console.log("Selected:", selectedOption);
     }
   };
+
+  const isTokenActive = CheckToken();
+
+  const handlerefresh = () => {
+    console.log("Status Token", isTokenActive);
+
+    if (!isTokenActive) {
+      window.location.reload();
+    }
+  };
+
+  const handlesubmit = (e: any) => {
+
+    // if()
+
+    let datas = {
+      email: document.getElementById("inputEmail4")?.nodeValue,
+      password: document.getElementById("inputPassword4")?.nodeValue,
+      address: document.getElementById("inputAddress")?.nodeValue,
+      address2: document.getElementById("inputAddress2")?.nodeValue,
+      city: document.getElementById("inputCity")?.nodeValue,
+      state: document.getElementById("inputState")?.nodeValue,
+      zip: document.getElementById("inputZip")?.nodeValue,
+      age: document.getElementById("inputAge")?.nodeValue,
+    }
+    e.preventDefault();
+
+    // console.log("Data:", datas);    
+  }
+
 
   return (
     <div >
@@ -186,7 +216,7 @@ const FormDataPage : React.FC<FormDataPageProps> = ({ namePage })  => {
                   </div>
                 </div>
                 <div className="col-12">
-                  <button type="submit" className="btn btn-primary">
+                  <button type="submit" className="btn btn-primary" onClick={handlesubmit}>
                     Submit
                   </button>
                 </div>

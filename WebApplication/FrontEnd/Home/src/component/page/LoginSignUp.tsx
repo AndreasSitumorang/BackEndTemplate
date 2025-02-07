@@ -1,7 +1,7 @@
 import  { useState } from "react";
-import user_icon from "../Assets/person.png";
-import email_icon from "../Assets/email.png";
-import password_icon from "../Assets/password.png";
+import user_icon from "../Assets/Icon/person.png";
+import email_icon from "../Assets/Icon/email.png";
+import password_icon from "../Assets/Icon/password.png";
 import { useNavigate } from "react-router-dom";
 import "../ui/styles/LoginSignUp.css";
 import PathConstants from "../router/pathConstants";
@@ -25,7 +25,9 @@ const LoginSignup = ()  => {
       .then((result) => {
         const ticket = result;
         localStorage.setItem("token", ticket);
+        localStorage.setItem("username", email);
         navigate(PathConstants.ABOUT);
+        window.location.reload();
        });
   };
 
