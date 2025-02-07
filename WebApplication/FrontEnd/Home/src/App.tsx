@@ -63,16 +63,6 @@ function App() {
               )
             }
           />
-          {/* <Route
-            path="/*" // Catch-all route for all paths that are not directly the login
-            element={
-              isAuthenticated ? (
-                <RoutesWeb isAuthenticated={isAuthenticated} />
-              ) : (
-                <Navigate to={PathConstants.LOGIN} />
-              )
-            }
-          /> */}
         </Routes>
         <RoutesWeb isAuthenticated={isAuthenticated} />
 

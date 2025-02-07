@@ -3,6 +3,7 @@ import "../ui/styles/Sidebar.css"; // You can create a separate CSS file for sty
 import { Link, useNavigate } from "react-router-dom";
 import Profile from "../Assets/Image/1-intro-photo-final.jpg";
 import PathConstants from "../router/pathConstants";
+import CheckToken from "../Context/CheckToken";
 
 interface sidebarProps {
   namePage: string;
@@ -13,10 +14,18 @@ const Sidebar: React.FC = () => {
   const username = localStorage.getItem("username");
   const navigate = useNavigate();
 
+  const isTokenActive = CheckToken();
 
+  const handlerefresh = () => {
+    console.log("Status Token", isTokenActive);
+
+    if (!isTokenActive) {
+      window.location.reload();
+    }
+  };
 
   return (
-    <div id="nav-bar" className="sidebar">
+    <div id="nav-bar" className="sidebar" onClick={handlerefresh}>
       <input id="nav-toggle" type="checkbox" />
       <div id="nav-header" className="custom-menu">
         <a id="nav-title" target="_blank">
